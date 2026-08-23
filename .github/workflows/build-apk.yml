@@ -21,7 +21,7 @@ jobs:
         uses: android-actions/setup-android@v3
 
       - name: Install Android SDK 35
-        run: unzip -o HRChase-Android-v0.8-Sleek-Redesign.zip
+        run: |
           sdkmanager "platforms;android-35" "build-tools;35.0.0"
 
       - name: Set up Gradle
@@ -30,7 +30,7 @@ jobs:
           gradle-version: "8.10.2"
 
       - name: Unzip HR Chase source
-        run: unz
+        run: unzip -o HRChase-Android-v0.8-Sleek-Redesign.zip
 
       - name: Build debug APK
         run: gradle -p HRChase assembleDebug --stacktrace
