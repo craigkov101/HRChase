@@ -30,7 +30,7 @@ jobs:
           gradle-version: "8.10.2"
 
       - name: Unzip HR Chase source
-        run: unzip -o HRChase-Android-v0.10-Kasper-Lens.zip
+        run: unzip -o HRChase-Android-v0.10.1-Headshots-CleanUI.zip
 
       - name: Build debug APK
         run: gradle -p HRChase assembleDebug --stacktrace
