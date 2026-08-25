@@ -30,7 +30,7 @@ jobs:
           gradle-version: "8.10.2"
 
       - name: Unzip HR Chase source
-        run: unzip -o HRChase-Android-v0.10.3.1-Heating-Up-Hotfix.zip
+        run: unzip -o HRChase-Android-v0.10.5-Pitch-Arsenal-Fit.zip
 
       - name: Build debug APK
         run: gradle -p HRChase assembleDebug --stacktrace
