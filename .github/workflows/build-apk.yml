@@ -30,7 +30,7 @@ jobs:
           gradle-version: "8.10.2"
 
       - name: Unzip HR Chase source
-        run: unzip -o HRChase-Android-v0.11.6-Pull-Refresh-Android-Back.zip
+        run: unzip -o HRChase-Android-v0.11.8-Universal-Player-Profiles.zip
 
       - name: Build debug APK
         run: gradle -p HRChase assembleDebug --stacktrace
