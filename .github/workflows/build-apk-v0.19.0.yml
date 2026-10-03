@@ -1,4 +1,4 @@
-name: Build HR Chase v0.19.0 APK
+name: Build HR Chase v0.19.3 APK
 
 on:
   workflow_dispatch:
@@ -15,28 +15,11 @@ jobs:
         uses: actions/setup-java@v4
         with:
           distribution: temurin
-          java-version: "17"
+          java-version: '17'
 
-      - name: Set up Android SDK
-        uses: android-actions/setup-android@v3
-
-      - name: Install Android SDK 35
+      - name: Extract HR Chase v0.19.3
         run: |
-          sdkmanager "platforms;android-35" "build-tools;35.0.0"
-
-      - name: Set up Gradle
-        uses: gradle/actions/setup-gradle@v4
-        with:
-          gradle-version: "8.10.2"
-
-      - name: Unzip HR Chase source
-        run: unzip -o HRChase-v0.19.0-Final-Polish.zip
-
-      - name: Build debug APK
-        run: gradle -p HRChase assembleDebug --stacktrace
-
-      - name: Upload APK
-        uses: actions/upload-artifact@v4
-        with:
-          name: HRChase-v0.19.0-APK
-          path: HRChase/app/build/outputs/apk/debug/app-debug.apk
+          rm -rf build-project
+          mkdir build-project
+          unzip -o HRChase-v0.19.3-Projected-Playoff-Hitters-Logo.zip -d build-project
+          echo "=== PROJECT CONTENTS ===
