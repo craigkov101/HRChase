@@ -1,4 +1,4 @@
-name: Build HR Chase v0.19.5 APK
+name: Build HR Chase v0.19.6 APK
 
 on:
   workflow_dispatch:
@@ -17,16 +17,16 @@ jobs:
           distribution: temurin
           java-version: '17'
 
-      - name: Extract HR Chase v0.19.5
+      - name: Extract HR Chase v0.19.6
         run: |
           rm -rf build-project
           mkdir build-project
-          unzip -o HRChase-v0.19.5-All-Teams-Hitters-Fix.zip -d build-project
+          unzip -o HRChase-v0.19.6-All-Teams-Compile-Fix.zip -d build-project
           echo "=== VERIFY PROJECT ==="
           ls -la build-project/HRChase
           ls -la build-project/HRChase/gradlew
 
-      - name: Build HR Chase v0.19.5
+      - name: Build HR Chase v0.19.6
         run: |
           chmod +x "$GITHUB_WORKSPACE/build-project/HRChase/gradlew"
           cd "$GITHUB_WORKSPACE/build-project/HRChase"
@@ -35,6 +35,6 @@ jobs:
       - name: Upload APK
         uses: actions/upload-artifact@v4
         with:
-          name: HRChase-v0.19.5-APK
+          name: HRChase-v0.19.6-APK
           path: build-project/HRChase/app/build/outputs/apk/debug/*.apk
           if-no-files-found: error
