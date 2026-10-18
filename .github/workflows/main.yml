@@ -1,14 +1,25 @@
-name: Build HR Chase v0.19.6 APK
+
+name: HR Chase v0.20.0 Android APK
 
 on:
   workflow_dispatch:
+  push:
+    branches: [main, master]
+    paths:
+      - "app/**"
+      - "build.gradle.kts"
+      - "settings.gradle.kts"
+      - "gradle.properties"
+      - ".github/workflows/android-build.yml"
 
 jobs:
   build:
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
 
     steps:
-      - name: Checkout repository
+      - name: Checkout
         uses: actions/checkout@v4
 
       - name: Set up Java 17
@@ -17,24 +28,27 @@ jobs:
           distribution: temurin
           java-version: '17'
 
-      - name: Extract HR Chase v0.19.6
-        run: |
-          rm -rf build-project
-          mkdir build-project
-          unzip -o HRChase-v0.19.6-All-Teams-Compile-Fix.zip -d build-project
-          echo "=== VERIFY PROJECT ==="
-          ls -la build-project/HRChase
-          ls -la build-project/HRChase/gradlew
+      - name: Install Android SDK tools
+        uses: android-actions/setup-android@v3
 
-      - name: Build HR Chase v0.19.6
-        run: |
-          chmod +x "$GITHUB_WORKSPACE/build-project/HRChase/gradlew"
-          cd "$GITHUB_WORKSPACE/build-project/HRChase"
-          ./gradlew assembleDebug --stacktrace
+      - name: Install Android platform 35
+        run: sdkmanager "platforms;android-35" "build-tools;35.0.0"
 
-      - name: Upload APK
+      - name: Configure Gradle 8.10.2
+        uses: gradle/actions/setup-gradle@v4
+        with:
+          gradle-version: '8.10.2'
+
+      - name: Run unit tests
+        run: gradle --no-daemon testDebugUnitTest
+
+      - name: Build debug APK
+        run: gradle --no-daemon assembleDebug
+
+      - name: Upload debug APK
         uses: actions/upload-artifact@v4
         with:
-          name: HRChase-v0.19.6-APK
-          path: build-project/HRChase/app/build/outputs/apk/debug/*.apk
+          name: HRChase-v0.20.0-debug-apk
+          path: app/build/outputs/apk/debug/app-debug.apk
           if-no-files-found: error
+          retention-days: 14
